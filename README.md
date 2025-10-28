@@ -79,4 +79,56 @@
 | `GET` | `/reviews/:id` | show | Show review details |
 | `GET` | `/users/reviews` | index | Get all reviews by current user |
 | `DELETE` | `/reviews/:id` | destroy | Delete own review |
+----------------------------
 
+
+# User Stories
+
+<details open>
+
+
+| # | Role | Task |
+|---|------|------|
+| 1 | As a **visitor** | I want to **sign up** for an account |
+| 2 | As a **user** | I want to **login** to my account |
+| 3 | As a **user** | I want to **logout** from my account |
+| 4 | As a **user** | I want to **view** my profile information |
+| 5 | As a **user** | I want to **update** my profile information |
+| 6 | As a **user** | I want to **delete** my account |
+| 7 | As a **user** | I want to **view all** available services |
+| 8 | As a **user** | I want to **view** service details |
+| 9 | As a **user** | I want to **search** for services by name |
+| 10 | As a **user** | I want to **view all** available caregivers |
+| 11 | As a **user** | I want to **view** caregiver details |
+| 12 | As a **user** | I want to **book** an appointment |
+| 13 | As a **user** | I want to **choose duration** (day/month/3 months) when booking |
+| 14 | As a **user** | I want to **select date and time** for my appointment |
+| 15 | As a **user** | I want to **view all** my appointments |
+| 16 | As a **user** | I want to **view** my current active appointment |
+| 17 | As a **user** | I want to **view** my appointment history |
+| 18 | As a **user** | I want to **update** my appointment details |
+| 19 | As a **user** | I want to **add notes** to my appointment |
+| 20 | As a **user** | I want to **cancel** my appointment |
+| 21 | As a **user** | I want to **mark** my appointment as completed |
+| 22 | As a **user** | I want to **add** a medical note |
+| 23 | As a **user** | I want to **add** medication information |
+| 24 | As a **user** | I want to **view all** my health records |
+| 25 | As a **user** | I want to **view** only my notes |
+| 26 | As a **user** | I want to **view** only my medications |
+| 27 | As a **user** | I want to **update** my health records |
+| 28 | As a **user** | I want to **delete** a health record |
+| 29 | As a **user** | I want to **view all** public reviews |
+| 30 | As a **user** | I want to **write** a review after completing service |
+| 31 | As a **user** | I want to **rate** my experience (1-5 stars) |
+| 32 | As a **user** | I want to **write comment** about my experience |
+| 33 | As a **user** | I want to **view** my own reviews |
+| 34 | As a **user** | I want to **delete** my reviews |
+
+</details>
+
+#### Review 
+- User can write review **ONLY after completing service**
+- Reviews will apear for all **visitors in public page**
+- Rating with **1-5 stars** and write **comments and feedback**
+
+</details>
