@@ -4,7 +4,6 @@ img_placeholder="https://img.freepik.com/premium-vector/default-avatar-profile-i
 
 
 class EHR(models.Model):
-    """Electronic Health Record - Contains all patient information"""
     GENDER_CHOICES = [
         ('male', 'Male'),
         ('female', 'Female'),
@@ -26,7 +25,6 @@ class EHR(models.Model):
 
 
 class EHRNote(models.Model):
-    """Notes for EHR - Patient can add multiple notes"""
     ehr = models.ForeignKey(EHR, on_delete=models.CASCADE, related_name='notes')
     note_text = models.TextField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
