@@ -116,10 +116,17 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_user(self, obj):
-        return {
+        user_data = {
             'id': obj.user.id,
             'username': obj.user.username
         }
+        try:
+            if hasattr(obj.user, 'ehr'):
+                user_data['name'] = obj.user.ehr.name or obj.user.username
+                user_data['image'] = obj.user.ehr.image or ''
+        except:
+            pass
+        return user_data
     
     def create(self, validated_data):
         validated_data.pop('service_id', None)
