@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions
-from .models import Service, Caregiver, Appointment, EHR, EHRNote
-from .serializers import ServiceSerializer, CaregiverSerializer, UserSerializer, AppointmentSerializer, EHRSerializer, EHRNoteSerializer
+from .models import Service, Caregiver, Appointment, EHR, EHRNote, Review
+from .serializers import ServiceSerializer, CaregiverSerializer, UserSerializer, AppointmentSerializer, EHRSerializer, EHRNoteSerializer, ReviewSerializer
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -310,6 +310,67 @@ class EHRNoteDetail(APIView):
             ehr = EHR.objects.get(user=request.user)
             note = get_object_or_404(EHRNote, id=note_id, ehr=ehr)
             note.delete()
+            return Response({'success': True}, status=status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ReviewsIndex(APIView):
+    serializer_class = ReviewSerializer
+
+    def get(self, request):
+        try:
+            reviews = Review.objects.all().order_by('-created_at')
+            serializer = self.serializer_class(reviews, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ReviewDetail(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ReviewSerializer
+
+    def get(self, request, review_id):
+        try:
+            review = get_object_or_404(Review, id=review_id)
+            serializer = self.serializer_class(review)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, review_id):
+        try:
+            review = get_object_or_404(Review, id=review_id, user=request.user)
+            serializer = self.serializer_class(review, data=request.data, partial=True)
+            if serializer.is_valid():
+                service_id = request.data.get('service_id')
+                if service_id:
+                    from .models import Service
+                    serializer.save(service=Service.objects.get(id=service_id))
+                else:
+                    serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, review_id):
+        try:
+            review = get_object_or_404(Review, id=review_id, user=request.user)
+            review.delete()
             return Response({'success': True}, status=status.HTTP_200_OK)
         except Exception as err:
             return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

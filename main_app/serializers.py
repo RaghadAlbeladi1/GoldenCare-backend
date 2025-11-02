@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Service, Caregiver, Appointment, EHR, EHRNote
+from .models import Service, Caregiver, Appointment, EHR, EHRNote, Review
 from django.contrib.auth.models import User
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -104,3 +104,27 @@ class EHRSerializer(serializers.ModelSerializer):
     class Meta:
         model = EHR
         fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    service = ServiceSerializer(read_only=True)
+    service_id = serializers.IntegerField(write_only=True)
+    
+    class Meta:
+        model = Review
+        fields = '__all__'
+    
+    def get_user(self, obj):
+        return {
+            'id': obj.user.id,
+            'username': obj.user.username
+        }
+    
+    def create(self, validated_data):
+        validated_data.pop('service_id', None)
+        service_id = self.initial_data.get('service_id')
+        if service_id:
+            from .models import Service
+            validated_data['service'] = Service.objects.get(id=service_id)
+        return super().create(validated_data)

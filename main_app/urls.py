@@ -8,6 +8,8 @@ from .views import (
     EHRView,
     EHRNotesIndex,
     EHRNoteDetail,
+    ReviewsIndex,
+    ReviewDetail,
     CreateUserView, LoginView, VerifyUserView
 )
 
@@ -23,4 +25,6 @@ urlpatterns = [
     path('ehr/', EHRView.as_view(), name='ehr'),
     path('ehr/notes/', EHRNotesIndex.as_view(), name='ehr-notes-index'),
     path('ehr/notes/<int:note_id>/', EHRNoteDetail.as_view(), name='ehr-note-detail'),
+    path('reviews/', ReviewsIndex.as_view(), name='reviews-index'),
+    path('reviews/<int:review_id>/', ReviewDetail.as_view(), name='review-detail'),
 ]
