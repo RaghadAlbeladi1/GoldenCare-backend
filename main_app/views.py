@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from datetime import timedelta
+from datetime import timedelta, datetime
 from dateutil.relativedelta import relativedelta
 
 class Home(APIView):
@@ -203,7 +203,7 @@ class AppointmentDetail(APIView):
     def put(self, request, appointment_id):
         try:
             appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
-            serializer = self.serializer_class(appointment, data=request.data)
+            serializer = self.serializer_class(appointment, data=request.data, partial=True)
             if serializer.is_valid():
                 save_kwargs = {}
                 if 'caregiver' in request.data:
@@ -211,7 +211,12 @@ class AppointmentDetail(APIView):
                 if 'service' in request.data:
                     save_kwargs['service_id'] = request.data.get('service')
                 
-                start_date = request.data.get('start_date') or request.data.get('date') or appointment.start_date
+                start_date_str = request.data.get('start_date') or request.data.get('date')
+                if start_date_str:
+                    start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+                else:
+                    start_date = appointment.start_date
+                
                 duration_type = request.data.get('duration_type') or appointment.duration_type
                 
                 if duration_type == '1day':
