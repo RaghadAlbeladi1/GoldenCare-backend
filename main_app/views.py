@@ -267,7 +267,7 @@ class EHRNotesIndex(APIView):
             serializer = self.serializer_class(notes, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except EHR.DoesNotExist:
-            return Response({'error': 'EHR not found. Please complete your profile first.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'EHR not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as err:
             return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -280,7 +280,7 @@ class EHRNotesIndex(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except EHR.DoesNotExist:
-            return Response({'error': 'EHR not found. Please complete your profile first.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'EHR not found.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as err:
             return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
