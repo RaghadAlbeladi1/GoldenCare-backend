@@ -67,7 +67,7 @@ class LoginView(APIView):
                 except Exception as error:
                     pass
             
-            return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": "Invalid"}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as error:
             return Response({'error': str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -256,7 +256,6 @@ class EHRView(APIView):
 
 
 class EHRNotesIndex(APIView):
-    """Create and list notes for EHR"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EHRNoteSerializer
 
@@ -286,7 +285,6 @@ class EHRNotesIndex(APIView):
 
 
 class EHRNoteDetail(APIView):
-    """Update and delete notes"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EHRNoteSerializer
 
