@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -21,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kz(zmk&6@xljr0ibeu1v_re!v8k@)93j1h_71la$92ty@!q3^3'
+SECRET_KEY = os.environ.get("SECRET_KEY", 'django-insecure-kz(zmk&6@xljr0ibeu1v_re!v8k@)93j1h_71la$92ty@!q3^3')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", 1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1 [::1]").split(" ")
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_HEADERS = [
@@ -125,8 +126,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'GoldenCaredb',
+        'ENGINE': os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
+        'NAME': os.environ.get("SQL_DATABASE", "GoldenCaredb"),
+        'USER': os.environ.get("SQL_USER", "docker_django_user"),
+        'PASSWORD': os.environ.get("SQL_PASSWORD", "hello_django"),
+        'HOST': os.environ.get("SQL_HOST", "db"),
+        'PORT': os.environ.get("SQL_PORT", "5432"),
     }
 }
 
