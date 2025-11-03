@@ -5,8 +5,32 @@
   </a><img width="500" height="80" alt="Sda-logo-color" src="https://github.com/user-attachments/assets/5edb2838-4fe6-4b18-b80d-706b31f56a64" />
 </p>
 
-### Frontend Repository    [GoldenCare Frontend](https://github.com/RaghadAlbeladi1/GoldenCare-frontend/tree/main)
-    
+# GoldenCare Backend API
+
+## Project Description
+
+GoldenCare is a comprehensive platform connecting families and caregivers to provide home-based senior care. The platform enables families to book caregiver services, manage appointments, access electronic health records (EHR), and write reviews. This backend API serves as the core of the GoldenCare ecosystem, providing RESTful endpoints for authentication, appointment management, health records, and service coordination.
+
+## Repository Description
+
+This repository contains the Django REST Framework backend for GoldenCare, a senior care management platform. The API provides secure authentication using JWT tokens, manages appointments with flexible duration options, handles electronic health records, and facilitates caregiver-service matching.
+
+## Tech Stack
+
+- **Framework**: Django 5.2.7
+- **API**: Django REST Framework
+- **Authentication**: JWT (djangorestframework-simplejwt)
+- **Database**: PostgreSQL
+- **Python**: 3.12
+- **Dependencies**:
+  - psycopg2-binary (PostgreSQL adapter)
+  - django-cors-headers (CORS handling)
+  - python-dateutil (Date utilities)
+
+## Frontend Repository
+
+[GoldenCare Frontend](https://github.com/RaghadAlbeladi1/GoldenCare-frontend/tree/main)
+
 ## RESTful Routing Table
 
 <details open>
@@ -15,54 +39,74 @@
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `POST` | `/users/signup/` | create | Register a new user (patient) |
-| `POST` | `/users/login/` | create | User login (returns token) |
-| `GET` | `/users/token/refresh/` | show | Refresh token (verify user) |
-| `POST` | `/users/token/refresh/` | create | Refresh access token |
+| `POST` | `/auth/register` | create | Register a new user (patient) |
+| `POST` | `/auth/login` | create | User login (returns token) |
+| `POST` | `/auth/logout` | destroy | User logout |
+
+## Users (Patients)
+
+| HTTP Method | Path | Action | Description |
+|------------|------|--------|-------------|
+| `GET` | `/users/profile` | show | Get current user profile |
+| `PUT` | `/users/profile` | update | Update user profile |
+| `PATCH` | `/users/profile` | update | Partially update user profile |
+| `DELETE` | `/users/profile` | destroy | Delete user account |
+
 
 ##  Caregivers
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `GET` | `/caregivers/` | index | List all caregivers |
+| `GET` | `/caregivers` | index | List all caregivers |
+| `GET` | `/caregivers/:id` | show | Show caregiver details (including service) |
 
 
 ## Services
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `GET` | `/services/` | index | List all active services |
+| `GET` | `/services` | index | List all active services |
+| `GET` | `/services/:id` | show | Show service details (including caregiver info) |
+| `GET` | `/services/search` | index | Search services by name or specialization |
 
 
 ## Appointments
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `GET` | `/appointments/` | index | List all appointments for current user |
-| `POST` | `/appointments/` | create | Book a new appointment |
-| `GET` | `/appointments/<int:appointment_id>/` | show | Show appointment details |
-| `PUT` | `/appointments/<int:appointment_id>/` | update | Update appointment (reschedule or add notes) |
-| `DELETE` | `/appointments/<int:appointment_id>/` | destroy | Cancel appointment |
+| `GET` | `/appointments` | index | List all appointments for current user |
+| `POST` | `/appointments` | create | Book a new appointment (cancels any pending appointment) |
+| `GET` | `/appointments/:id` | show | Show appointment details |
+| `PUT` | `/appointments/:id` | update | Update appointment (reschedule or add notes) |
+| `PATCH` | `/appointments/:id` | update | Partially update appointment |
+| `DELETE` | `/appointments/:id` | destroy | Cancel appointment |
+| `PUT` | `/appointments/:id/complete` | update | Mark appointment as completed |
+| `GET` | `/appointments/current` | show | Get current active appointment |
+| `GET` | `/appointments/history` | index | Get all completed appointments |
 
 ##  EHR (Electronic Health Records)
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `GET` | `/ehr/` | show | Get EHR record for current user |
-| `GET` | `/ehr/notes/` | index | Get all notes for current user |
-| `POST` | `/ehr/notes/` | create | Add a new note |
-| `PUT` | `/ehr/notes/<int:note_id>/` | update | Update note |
-| `DELETE` | `/ehr/notes/<int:note_id>/` | destroy | Delete note |
+| `GET` | `/ehr` | index | Get all EHR records for current user |
+| `POST` | `/ehr/notes` | create | Add a new note |
+| `POST` | `/ehr/medications` | create | Add medication information |
+| `GET` | `/ehr/:id` | show | Show specific EHR record |
+| `PUT` | `/ehr/:id` | update | Update EHR record |
+| `PATCH` | `/ehr/:id` | update | Partially update EHR record |
+| `DELETE` | `/ehr/:id` | destroy | Delete EHR record |
+| `GET` | `/ehr/notes` | index | Get all notes only |
+| `GET` | `/ehr/medications` | index | Get all medications only |
 
 ## Reviews 
 
 | HTTP Method | Path | Action | Description |
 |------------|------|--------|-------------|
-| `GET` | `/reviews/` | index | Get all public reviews (displayed on website) |
-| `POST` | `/reviews/` | create | Add review (requires completed service) |
-| `GET` | `/reviews/<int:review_id>/` | show | Show review details |
-| `PUT` | `/reviews/<int:review_id>/` | update | Update own review |
-| `DELETE` | `/reviews/<int:review_id>/` | destroy | Delete own review |
+| `GET` | `/reviews` | index | Get all public reviews (displayed on website) |
+| `POST` | `/reviews` | create | Add review (requires completed service) |
+| `GET` | `/reviews/:id` | show | Show review details |
+| `GET` | `/users/reviews` | index | Get all reviews by current user |
+| `DELETE` | `/reviews/:id` | destroy | Delete own review |
 
 </details>
 
