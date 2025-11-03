@@ -6,7 +6,7 @@
 </p>
 
 # GoldenCare Backend API
-
+### Frontend Repository    [GoldenCare Frontend](https://github.com/RaghadAlbeladi1/GoldenCare-frontend/tree/main)
 ## Project Description
 
 GoldenCare is a comprehensive platform connecting families and caregivers to provide home-based senior care. The platform enables families to book caregiver services, manage appointments, access electronic health records (EHR), and write reviews. This backend API serves as the core of the GoldenCare ecosystem, providing RESTful endpoints for authentication, appointment management, health records, and service coordination.
@@ -26,10 +26,6 @@ This repository contains the Django REST Framework backend for GoldenCare, a sen
   - psycopg2-binary (PostgreSQL adapter)
   - django-cors-headers (CORS handling)
   - python-dateutil (Date utilities)
-
-## Frontend Repository
-
-[GoldenCare Frontend](https://github.com/RaghadAlbeladi1/GoldenCare-frontend/tree/main)
 
 ## RESTful Routing Table
 
