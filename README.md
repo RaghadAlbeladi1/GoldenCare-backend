@@ -163,3 +163,25 @@ This repository contains the Django REST Framework backend for GoldenCare, a sen
 
 </details>
 
+## IceBox Features
+
+Features planned for future implementation:
+
+- Community Forum: Platform for families to connect, ask questions about best doctors, share experiences, and support each other
+- Virtual Clinic: Virtual consultation sessions with healthcare professionals through the platform
+- Advanced Medical Devices Section: Browse and request advanced medical devices, connected with contracted caregivers
+- Emergency Response System: One-tap emergency button with instant caregiver and medical professional alert
+- IoT Integration: Connect IoT devices for real-time health monitoring and automated alerts
+- AI Health Agent: Intelligent AI assistant to answer health questions, provide recommendations, and guide users
+- Comprehensive Dashboard: Real-time monitoring dashboard for families to track health metrics, appointments, and care status
+- Smart Device Marketplace: Integration of cutting-edge technologies beneficial for elderly care
+- Telemedicine Integration: Video consultations with doctors and specialists
+- Medication Management: Smart medication reminders and tracking system
+- Family Care Coordination: Dashboard for family members to coordinate care together
+- Health Analytics: AI-powered insights into health trends and recommendations
+- HL7 Integration: Health Level Seven (HL7) standard integration for seamless interoperability with hospitals, clinics, and other healthcare systems. HL7 enables standardized data exchange of patient records, lab results, prescriptions, and clinical documents, ensuring compatibility and secure communication between GoldenCare platform and external healthcare providers
+- Comprehensive Patient Records: Progress notes, vitals tracking, and complete integrated patient information for holistic care management
+- AI Medical Coder Agent: Intelligent AI agent for medical coding that accurately writes medical codes, calculates insurance claims, and ensures proper billing documentation
+- Vitals Monitoring: Real-time tracking and recording of patient vital signs with historical data analysis
+- Progress Notes System: Digital documentation of patient care progress, treatment updates, and medical observations
+
