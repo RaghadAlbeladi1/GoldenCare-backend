@@ -7,6 +7,8 @@
 
 # GoldenCare Backend API
 ### Frontend Repository    [GoldenCare Frontend](https://github.com/RaghadAlbeladi1/GoldenCare-frontend/tree/main)
+### Backend Link [GoldenCare](http://127.0.0.1:8000/)
+
 ## Project Description
 
 GoldenCare is a comprehensive platform connecting families and caregivers to provide home-based senior care. The platform enables families to book caregiver services, manage appointments, access electronic health records (EHR), and write reviews. This backend API serves as the core of the GoldenCare ecosystem, providing RESTful endpoints for authentication, appointment management, health records, and service coordination.
