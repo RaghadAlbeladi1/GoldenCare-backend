@@ -29,6 +29,99 @@ This repository contains the Django REST Framework backend for GoldenCare, a sen
   - django-cors-headers (CORS handling)
   - python-dateutil (Date utilities)
 
+## Installation Instructions
+
+### Using Docker (Recommended)
+
+1. **Prerequisites**:
+   - Docker Desktop installed and running
+   - Docker Compose installed (included with Docker Desktop)
+
+2. **Clone the repository**:
+   ```bash
+   git clone https://github.com/RaghadAlbeladi1/GoldenCare-backend.git
+   cd GoldenCare-backend
+   ```
+
+3. **Navigate to project root** (where docker-compose.yml is located):
+   ```bash
+   cd ../capstone-project
+   ```
+
+4. **Create environment file** (if not exists):
+   ```bash
+   # Create .env.dev file in backend directory with your configuration
+   # Example:
+   # SECRET_KEY=your-secret-key
+   # DEBUG=True
+   # DATABASE_URL=postgresql://docker_django_user:hello_django@db:5432/GoldenCaredb
+   ```
+
+5. **Build and run containers**:
+   ```bash
+   docker-compose up --build
+   ```
+
+6. **Access the application**:
+   - Backend API: `http://localhost:8000`
+   - API Documentation: `http://localhost:8000/api/`
+
+7. **View logs**:
+   ```bash
+   docker-compose logs -f api
+   ```
+
+8. **Stop containers**:
+   ```bash
+   docker-compose down
+   ```
+
+9. **Stop and remove volumes** (clean database):
+   ```bash
+   docker-compose down -v
+   ```
+
+### Manual Installation (Without Docker)
+
+1. **Prerequisites**:
+   - Python 3.12 or higher
+   - PostgreSQL 16 or higher
+   - pip (Python package manager)
+
+2. **Create virtual environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up PostgreSQL database**:
+   - Create a PostgreSQL database named `GoldenCaredb`
+   - Update database settings in `settings.py` or use environment variables
+
+5. **Run migrations**:
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+6. **Create superuser** (optional):
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. **Run development server**:
+   ```bash
+   python manage.py runserver
+   ```
+
+8. **Access the application**:
+   - Backend API: `http://localhost:8000`
+
 ## RESTful Routing Table
 
 <details open>
