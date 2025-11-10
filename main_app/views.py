@@ -253,11 +253,40 @@ class EHRView(APIView):
 
     def get(self, request):
         try:
-            ehr, created = EHR.objects.get_or_create(user=request.user)
+            try:
+                ehr = EHR.objects.get(user=request.user)
+            except EHR.DoesNotExist:
+                patient_id = f"PAT{request.user.id:06d}"
+                ehr = EHR.objects.create(
+                    user=request.user,
+                    patient_id=patient_id,
+                    name='',
+                    phone='',
+                    age=None,
+                    gender='',
+                    location='',
+                    image=''
+                )
             serializer = self.serializer_class(ehr)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as err:
             return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request):
+        try:
+            ehr = EHR.objects.get(user=request.user)
+            serializer = self.serializer_class(ehr, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except EHR.DoesNotExist:
+            return Response({'error': 'EHR not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as err:
+            return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def patch(self, request):
+        return self.put(request)
 
 
 class EHRNotesIndex(APIView):

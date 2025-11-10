@@ -51,15 +51,26 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']  
         )
         
+        if not patient_id or (isinstance(patient_id, str) and patient_id.strip() == ''):
+            patient_id = f"PAT{user.id:06d}"
+        
+        if EHR.objects.filter(patient_id=patient_id).exists():
+            patient_id = f"{patient_id}_{user.id}"
+        phone_clean = phone.strip() if phone and isinstance(phone, str) and phone.strip() else (phone if phone else '')
+        location_clean = location.strip() if location and isinstance(location, str) and location.strip() else (location if location else '')
+        image_clean = image.strip() if image and isinstance(image, str) and image.strip() else (image if image else '')
+        name_clean = name.strip() if name and isinstance(name, str) and name.strip() else (name if name else '')
+        gender_clean = gender.strip() if gender and isinstance(gender, str) and gender.strip() else (gender if gender else '')
+        
         EHR.objects.create(
             user=user,
             patient_id=patient_id,
-            name=name or '',
-            phone=phone or '',
+            name=name_clean,
+            phone=phone_clean,
             age=age,
-            gender=gender or '',
-            location=location or '',
-            image=image or ''
+            gender=gender_clean,
+            location=location_clean,
+            image=image_clean
         )
         return user
 
